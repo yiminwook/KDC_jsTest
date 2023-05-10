@@ -48,4 +48,8 @@ class App {
     this.data = nextData;
     this.searchResult.setState(nextData);
   }
+
+  test() {
+    console.log(this.isDarkMode);
+  }
 }
