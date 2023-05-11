@@ -3,7 +3,7 @@ console.log("app is running!");
 class App {
   $target = null;
   data = [];
-  isDarkMode = window.matchMedia("(prefers-color-scheme: dark)").matches; //window darkmode üũ;
+  isDarkMode = window.matchMedia("(prefers-color-scheme: dark)").matches; //os darkmode 체크
 
   constructor($target) {
     this.$target = $target;
@@ -47,11 +47,18 @@ class App {
     this.searchResult = new SearchResult({
       $target,
       initialData: this.data,
-      onClick: (image) => {
-        this.imageInfo.setState({
-          visible: true,
-          image,
-        });
+      onClick: async (image) => {
+        this.loading.show();
+        try {
+          await this.imageInfo.showDetail({
+            visible: true,
+            image,
+          });
+          this.loading.hide();
+        } catch (error) {
+          console.log(error);
+          this.loading.hide();
+        }
       },
     });
 

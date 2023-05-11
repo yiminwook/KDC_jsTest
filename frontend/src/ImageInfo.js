@@ -1,6 +1,7 @@
 class ImageInfo {
   $imageInfo = null;
   data = null;
+  // {visible: bool, image:{ id,url, name }}
 
   constructor({ $target, data }) {
     const $imageInfo = document.createElement("div");
@@ -16,6 +17,17 @@ class ImageInfo {
   setState(nextData) {
     this.data = nextData;
     this.render();
+  }
+
+  async showDetail({ visible, image }) {
+    const id = image.id;
+    const { data } = await api.fetchCatsById(id);
+    const newData = { ...image, ...data };
+    this.setState({ visible, image: newData });
+  }
+
+  closeImageInfo() {
+    this.setState({ visible: false, image: null });
   }
 
   render() {
@@ -35,6 +47,19 @@ class ImageInfo {
           </div>
         </div>`;
       this.$imageInfo.style.display = "block";
+      this.$imageInfo.addEventListener("click", (e) => {
+        if (
+          e.target.className === "ImageInfo" ||
+          e.target.className === "close"
+        ) {
+          this.closeImageInfo();
+        }
+      });
+      document.addEventListener("keyup", (e) => {
+        if (e.key === "Escape" || e.key === 27) {
+          this.closeImageInfo();
+        }
+      });
     } else {
       this.$imageInfo.style.display = "none";
     }
