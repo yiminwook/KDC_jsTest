@@ -4,17 +4,16 @@ class DarkModeToggle {
   constructor({ $target, initMode, onChange }) {
     this.isDarkMode = initMode;
     const $darkModeToggleSection = document.createElement("section");
-    const $darkModeToggle = document.createElement("input");
-
     this.$darkModeToggleSection = $darkModeToggleSection;
-    this.$darkModeToggle = $darkModeToggle;
-    this.$darkModeToggle.type = "checkbox";
-    this.$darkModeToggle.className = "darkModeToggle";
-
-    this.$darkModeToggleSection.appendChild(this.$darkModeToggle);
     $target.appendChild(this.$darkModeToggleSection);
 
-    $darkModeToggle.addEventListener("change", (e) => {
+    const $darkModeToggle = document.createElement("input");
+    this.$darkModeToggle = $darkModeToggle;
+    this.$darkModeToggle.type = "checkbox";
+    this.$darkModeToggle.className = "DarkModeToggle";
+    this.$darkModeToggleSection.appendChild(this.$darkModeToggle);
+
+    this.$darkModeToggle.addEventListener("change", (e) => {
       const isChecked = e.target.checked;
       this.setColorMode(isChecked);
       onChange(isChecked);
@@ -27,7 +26,7 @@ class DarkModeToggle {
   /** colorMode 초기화 */
   initColorMode() {
     this.setColorMode(this.isDarkMode);
-    //window darkmode일때 상태를 변하지 않게
+    //window 다크모드 설정과 체크박스 체크여부를 같게
     this.$darkModeToggle.checked = this.isDarkMode;
   }
 

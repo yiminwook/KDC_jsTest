@@ -8,6 +8,8 @@ class App {
   constructor($target) {
     this.$target = $target;
 
+    this.loading = new Loading({ $target });
+
     this.darkModeToggle = new DarkModeToggle({
       $target,
       initMode: this.isDarkMode,
@@ -18,8 +20,16 @@ class App {
 
     this.searchInput = new SearchInput({
       $target,
-      onSearch: (keyword) => {
-        api.fetchCats(keyword).then(({ data }) => this.setState(data));
+      onSearch: async (keyword) => {
+        try {
+          this.loading.show();
+          const { data } = await api.fetchCats(keyword);
+          this.setState(data);
+          this.loading.hide();
+        } catch (error) {
+          console.error(error);
+          this.loading.hide();
+        }
       },
     });
 

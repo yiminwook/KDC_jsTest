@@ -30,9 +30,34 @@ body * {
 }
 
 #App {
+  position: relative;
   margin: 1.5em auto;
   max-width: 1200px;
   column-gap: 1.5em;
+}
+
+.Loading {
+  position: fixed;
+  z-index: 10;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.3);
+}
+
+.Loading > div {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translateX(-50%) translateY(-50%);
+  font-size: 40px;
+}
+
+.DarkModeToggle {
+  width: 30px;
+  height: 30px;
+  margin: 0;
 }
 
 .SearchResult {
