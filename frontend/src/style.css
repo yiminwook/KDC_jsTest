@@ -99,10 +99,21 @@ body * {
   width: 100%;
 }
 
+.SearchInputSection {
+  display: flex;
+  gap: 40px;
+}
+
 .SearchInput {
-  width: 100%;
+  flex-grow: 2;
+  flex-shrink: 1;
   font-size: 40px;
   padding: 10px 15px;
+}
+
+.RandomButton {
+  font-size: 40px;
+  cursor: pointer;
 }
 
 .ImageInfo {

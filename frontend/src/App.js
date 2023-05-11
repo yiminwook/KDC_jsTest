@@ -31,6 +31,17 @@ class App {
           this.loading.hide();
         }
       },
+      onRandomSearch: async () => {
+        try {
+          this.loading.show();
+          const { data } = await api.fetchRandomCats();
+          this.setState(data);
+          this.loading.hide();
+        } catch (error) {
+          console.error(error);
+          this.loading.hide();
+        }
+      },
     });
 
     this.searchResult = new SearchResult({
