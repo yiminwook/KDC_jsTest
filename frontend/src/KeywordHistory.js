@@ -16,13 +16,13 @@ class KeywordHistory {
   }
 
   init() {
-    const newData = handleLocalStorage.getKeyword();
+    const newData = handleLocalStorage.get({ key: "keywordHistory" });
     this.setState(newData);
   }
 
   addKeyword(keyword) {
-    handleLocalStorage.setKeyword(keyword);
-    const newData = handleLocalStorage.getKeyword();
+    handleLocalStorage.set({ key: "keywordHistory", addData: keyword });
+    const newData = handleLocalStorage.get({ key: "keywordHistory" });
     this.setState(newData);
   }
 

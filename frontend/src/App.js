@@ -3,7 +3,7 @@ console.log("app is running!");
 class App {
   $target = null;
   data = [];
-  isDarkMode = window.matchMedia("(prefers-color-scheme: dark)").matches; //os darkmode 체크
+  isDarkMode = null;
 
   constructor($target) {
     this.$target = $target;
@@ -25,6 +25,7 @@ class App {
           this.loading.show();
           const { data } = await api.fetchCats(keyword);
           this.setState(data);
+          this.saveResult(data);
           this.loading.hide();
         } catch (error) {
           console.error(error);
@@ -69,10 +70,21 @@ class App {
         image: null,
       },
     });
+
+    this.init();
+  }
+
+  init() {
+    this.data = handleLocalStorage.get({ key: "lastResult" }) || [];
+    this.setState(this.data);
   }
 
   setState(nextData) {
     this.data = nextData;
     this.searchResult.setState(nextData);
+  }
+
+  saveResult(result) {
+    handleLocalStorage.set({ key: "lastResult", addData: result });
   }
 }

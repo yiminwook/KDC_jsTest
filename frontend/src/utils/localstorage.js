@@ -1,11 +1,16 @@
 const handleLocalStorage = {
-  getKeyword: () => {
-    const keyword = JSON.parse(localStorage.getItem("keywordHistory")) || [];
+  get: ({ key }) => {
+    const keyword = JSON.parse(localStorage.getItem(key)) || [];
     return keyword;
   },
-  setKeyword: (keyword) => {
-    const data = handleLocalStorage.getKeyword();
-    const newData = [keyword, ...data].slice(0, 5); //최근 5개
-    localStorage.setItem("keywordHistory", JSON.stringify(newData));
+  set: ({ key, addData }) => {
+    const data = handleLocalStorage.get({ key });
+    let newData;
+    if (key === "lastResult") {
+      newData = addData;
+    } else {
+      newData = [addData, ...data].slice(0, 5); //최근 5개
+    }
+    localStorage.setItem(key, JSON.stringify(newData));
   },
 };

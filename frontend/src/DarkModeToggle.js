@@ -20,11 +20,12 @@ class DarkModeToggle {
     });
 
     // console.log("DarkModeToggle created.", this);
-    this.initColorMode();
+    this.init();
   }
 
   /** colorMode 초기화 */
-  initColorMode() {
+  init() {
+    this.isDarkMode = window.matchMedia("(prefers-color-scheme: dark)").matches; //os darkmode 체크
     this.setColorMode(this.isDarkMode);
     //window 다크모드 설정과 체크박스 체크여부를 같게
     this.$darkModeToggle.checked = this.isDarkMode;
