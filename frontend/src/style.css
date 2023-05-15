@@ -105,15 +105,21 @@ body * {
 }
 
 .SearchInputSection {
-  display: flex;
-  gap: 40px;
+  display: grid;
+  grid-template-columns: 3fr 1fr;
+  column-gap: 40px;
 }
 
 .SearchInput {
-  flex-grow: 2;
-  flex-shrink: 1;
   font-size: 40px;
   padding: 10px 15px;
+}
+
+.KeywordHistory {
+  display: flex;
+  list-style: none;
+  gap: 10px;
+  padding: 10px;
 }
 
 .RandomButton {

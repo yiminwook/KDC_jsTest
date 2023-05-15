@@ -12,17 +12,25 @@ class SearchInput {
     this.$searchInput.autofocus = "autofocus";
     this.$searchInputSection.appendChild(this.$searchInput);
 
-    this.$searchInput.addEventListener("keyup", (e) => {
-      if (e.key === "Enter" || e.key === 13) {
-        onSearch(e.target.value);
-      }
-    });
-
     this.randomButton = new RandomButton({
       $target: this.$searchInputSection,
       onClick: (e) => {
         onRandomSearch(e);
       },
+    });
+
+    this.keywordHistory = new KeywordHistory({
+      $target: this.$searchInputSection,
+      onSearch: (keyword) => onSearch(keyword),
+    });
+
+    this.$searchInput.addEventListener("keypress", (e) => {
+      //keyup시 두번 요청오류
+      if (e.key === "Enter" || e.key === 13) {
+        const keyword = e.target.value;
+        onSearch(keyword);
+        this.keywordHistory.addKeyword(keyword);
+      }
     });
   }
 }
