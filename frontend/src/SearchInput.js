@@ -32,5 +32,13 @@ class SearchInput {
         this.keywordHistory.addKeyword(keyword);
       }
     });
+
+    this.init();
+  }
+
+  init() {
+    const lastKeyword =
+      handleLocalStorage.get({ key: "keywordHistory" })[0] ?? "";
+    this.$searchInput.value = lastKeyword;
   }
 }
