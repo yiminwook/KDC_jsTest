@@ -28,6 +28,7 @@ class SearchInput {
       //keyup시 두번 요청오류
       if (e.key === "Enter" || e.key === 13) {
         const keyword = e.target.value;
+        if (!keyword.trim()) return;
         onSearch(keyword);
         this.keywordHistory.addKeyword(keyword);
       }
