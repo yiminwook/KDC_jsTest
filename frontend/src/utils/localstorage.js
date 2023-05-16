@@ -1,4 +1,7 @@
 const handleLocalStorage = {
+  /**
+   * @key "lastResult" | "keywordHistory"
+   */
   get: ({ key }) => {
     const keyword = JSON.parse(localStorage.getItem(key)) || [];
     return keyword;

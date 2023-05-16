@@ -1,9 +1,8 @@
-console.log("app is running!");
-
 class App {
   $target = null;
   data = [];
   isDarkMode = null;
+  page = 1;
 
   constructor($target) {
     this.$target = $target;
@@ -14,7 +13,7 @@ class App {
       $target,
       initMode: this.isDarkMode,
       onChange: (isDarkMode) => {
-        this.isDarkMode = isDarkMode;
+        this.isDarkMode = isDarkMode; //setState
       },
     });
 
@@ -49,8 +48,8 @@ class App {
       $target,
       initialData: this.data,
       onClick: async (image) => {
-        this.loading.show();
         try {
+          this.loading.show();
           await this.imageInfo.showDetail({
             visible: true,
             image,
@@ -58,6 +57,24 @@ class App {
           this.loading.hide();
         } catch (error) {
           console.log(error);
+          this.loading.hide();
+        }
+      },
+      onNextPage: async () => {
+        try {
+          this.loading.show();
+          const lastKeyword = handleLocalStorage.get({
+            key: "keywordHistory",
+          })[0];
+          const { data } = await api.fetchCatsWithPage({
+            keyword: lastKeyword,
+            page: ++this.page, //setState
+          });
+          console.log(this.page);
+          this.setState([...this.data, ...data]);
+          this.loading.hide();
+        } catch (error) {
+          console.error(error);
           this.loading.hide();
         }
       },
