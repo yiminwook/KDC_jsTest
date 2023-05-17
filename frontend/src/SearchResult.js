@@ -1,7 +1,23 @@
+const IMAGE_PLACEHOLDER = "https://via.placeholder.com/200x300";
 class SearchResult {
   $searchResultSection = null;
   data = null;
   onClick = null;
+
+  listObserver = new IntersectionObserver((items, observer) => {
+    const lastDataIdx = this.data.length - 1;
+    items.forEach((item) => {
+      if (!item.isIntersecting) return;
+      //imageLoading
+      const imageEl = item.target.querySelector("img");
+      imageEl.src = imageEl.dataset.src;
+      const dataIndex = Number(item.target.dataset.index);
+      //무한스크롤
+      if (dataIndex === lastDataIdx) {
+        this.onNextPage();
+      }
+    });
+  });
 
   constructor({ $target, initialData, onClick, onNextPage }) {
     this.$searchResultSection = document.createElement("section");
@@ -23,38 +39,14 @@ class SearchResult {
     this.render();
   }
 
-  /** 요소가 화면에 보이는지 확인 */
-  isElementInViewport(el) {
-    const rect = el.getBoundingClientRect();
-    return (
-      rect.top >= 0 &&
-      rect.left >= 0 &&
-      rect.bottom <=
-        (window.innerHeight || document.documentElement.clientHeight) &&
-      rect.right <= (window.innerWidth || document.documentElement.clientWidth)
-    );
-  }
-
-  applyEventToElement(items) {
-    document.addEventListener("scroll", () => {
-      const lastItem = items[items.length - 1];
-      if (!lastItem) return;
-      if (!this.isElementInViewport(lastItem)) return;
-      this.onNextPage();
-      // items.forEach((el, index) => {
-      //   if (this.isElementInViewport(el) && items.length - 1 === index) {
-      //     this.onNextPage();
-      //   }
-      // });
-    });
-  }
-
   render() {
     this.$searchResult.innerHTML = this.data
       .map(
-        (cat) => `
-          <li class="item">
-            <img src=${cat.url} alt=${cat.name} />
+        (cat, index) => `
+          <li class="item" data-index=${index}>
+            <div>
+              <img src=${IMAGE_PLACEHOLDER} data-src=${cat.url} alt=${cat.name} />
+            </div
           </li>
         `
       )
@@ -66,8 +58,8 @@ class SearchResult {
       $item.addEventListener("click", () => {
         this.onClick(this.data[index]);
       });
-    });
 
-    this.applyEventToElement(listItems);
+      this.listObserver.observe($item);
+    });
   }
 }

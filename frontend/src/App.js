@@ -70,7 +70,7 @@ class App {
             keyword: lastKeyword,
             page: ++this.page, //setState
           });
-          console.log(this.page);
+          console.log(data);
           this.setState([...this.data, ...data]);
           this.loading.hide();
         } catch (error) {

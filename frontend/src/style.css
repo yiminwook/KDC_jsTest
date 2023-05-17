@@ -171,3 +171,14 @@ body * {
 .ImageInfo .content-wrapper img {
   width: 100%;
 }
+
+.item > div {
+  position: relative;
+  width: auto;
+  aspect-ratio: 1 / 1.5;
+  background-color: gray;
+}
+
+.item > div > img {
+  position: absolute;
+}
