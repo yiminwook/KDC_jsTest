@@ -177,6 +177,7 @@ body * {
   width: auto;
   aspect-ratio: 1 / 1.5;
   background-color: gray;
+  overflow: hidden;
 }
 
 .item > div > img {

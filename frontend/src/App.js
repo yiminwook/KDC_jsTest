@@ -1,3 +1,11 @@
+import DarkModeToggle from "./DarkModeToggle.js";
+import ImageInfo from "./ImageInfo.js";
+import Loading from "./Loading.js";
+import SearchInput from "./SearchInput.js";
+import SearchResult from "./SearchResult.js";
+import api from "./api.js";
+import handleLocalStorage from "./utils/localstorage.js";
+
 class App {
   $target = null;
   data = [];
@@ -70,7 +78,6 @@ class App {
             keyword: lastKeyword,
             page: ++this.page, //setState
           });
-          console.log(data);
           this.setState([...this.data, ...data]);
           this.loading.hide();
         } catch (error) {
@@ -105,3 +112,5 @@ class App {
     handleLocalStorage.set({ key: "lastResult", addData: result });
   }
 }
+
+export default App;

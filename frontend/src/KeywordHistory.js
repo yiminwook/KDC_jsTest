@@ -1,3 +1,4 @@
+import handleLocalStorage from "./utils/localstorage.js";
 class KeywordHistory {
   $target = null;
   $keywordHistory = null;
@@ -46,3 +47,5 @@ class KeywordHistory {
       );
   }
 }
+
+export default KeywordHistory;

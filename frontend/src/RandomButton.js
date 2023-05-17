@@ -10,3 +10,5 @@ class RandomButton {
     });
   }
 }
+
+export default RandomButton;

@@ -17,3 +17,5 @@ const handleLocalStorage = {
     localStorage.setItem(key, JSON.stringify(newData));
   },
 };
+
+export default handleLocalStorage;

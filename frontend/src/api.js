@@ -1,4 +1,6 @@
-const API_ENDPOINT = "http://localhost:4001";
+import { config } from "./config.js";
+
+const { API_ENDPOINT } = config;
 
 const REQUEST_ERROR = {
   500: { message: "500, 서버에러" },
@@ -33,3 +35,5 @@ const api = {
     return await request(`${API_ENDPOINT}/api/cats/${id}`);
   },
 };
+
+export default api;

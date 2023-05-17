@@ -1,3 +1,7 @@
+import KeywordHistory from "./KeywordHistory.js";
+import handleLocalStorage from "./utils/localstorage.js";
+import RandomButton from "./RandomButton.js";
+
 class SearchInput {
   constructor({ $target, onSearch, onRandomSearch }) {
     const $searchInputSection = document.createElement("section");
@@ -43,3 +47,5 @@ class SearchInput {
     this.$searchInput.value = lastKeyword;
   }
 }
+
+export default SearchInput;
