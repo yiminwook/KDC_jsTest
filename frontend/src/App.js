@@ -8,9 +8,11 @@ import handleLocalStorage from "./utils/localstorage.js";
 
 class App {
   $target = null;
-  data = [];
-  isDarkMode = null;
-  page = 1;
+  data = {
+    items: [],
+    page: 1,
+    isDarkMode: false,
+  };
 
   constructor($target) {
     this.$target = $target;
@@ -19,9 +21,9 @@ class App {
 
     this.darkModeToggle = new DarkModeToggle({
       $target,
-      initMode: this.isDarkMode,
+      initMode: this.data.isDarkMode,
       onChange: (isDarkMode) => {
-        this.isDarkMode = isDarkMode; //setState
+        this.setState({ ...this.data, isDarkMode });
       },
     });
 
@@ -30,8 +32,8 @@ class App {
       onSearch: async (keyword) => {
         try {
           this.loading.show();
-          const { data } = await api.fetchCats(keyword);
-          this.setState(data);
+          const { data = [] } = await api.fetchCats(keyword);
+          this.setState({ ...this.data, items: data });
           this.saveResult(data);
           this.loading.hide();
         } catch (error) {
@@ -39,11 +41,12 @@ class App {
           this.loading.hide();
         }
       },
+
       onRandomSearch: async () => {
         try {
           this.loading.show();
           const { data } = await api.fetchRandomCats();
-          this.setState(data);
+          this.setState({ ...this.data, items: data });
           this.loading.hide();
         } catch (error) {
           console.error(error);
@@ -54,7 +57,7 @@ class App {
 
     this.searchResult = new SearchResult({
       $target,
-      initialData: this.data,
+      initialData: this.data.items,
       onClick: async (image) => {
         try {
           this.loading.show();
@@ -76,9 +79,14 @@ class App {
           })[0];
           const { data } = await api.fetchCatsWithPage({
             keyword: lastKeyword,
-            page: ++this.page, //setState
+            page: this.data.page + 1, //setState
           });
-          this.setState([...this.data, ...data]);
+          const newItems = [...this.data.items, ...data];
+          this.setState({
+            ...this.data,
+            items: newItems,
+            page: this.data.page + 1,
+          });
           this.loading.hide();
         } catch (error) {
           console.error(error);
@@ -99,13 +107,13 @@ class App {
   }
 
   init() {
-    this.data = handleLocalStorage.get({ key: "lastResult" }) || [];
-    this.setState(this.data);
+    const lastItems = handleLocalStorage.get({ key: "lastResult" }) || [];
+    this.setState({ ...this.data, items: lastItems });
   }
 
   setState(nextData) {
     this.data = nextData;
-    this.searchResult.setState(nextData);
+    this.searchResult.setState(this.data.items);
   }
 
   saveResult(result) {

@@ -8,6 +8,7 @@ const handleLocalStorage = {
   },
   set: ({ key, addData }) => {
     const data = handleLocalStorage.get({ key });
+    if (data.indexOf(addData) >= 0) return;
     let newData;
     if (key === "lastResult") {
       newData = addData;

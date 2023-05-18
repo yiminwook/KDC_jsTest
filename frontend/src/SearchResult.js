@@ -35,6 +35,7 @@ class SearchResult {
   }
 
   setState(nextData) {
+    console.log("result", nextData);
     this.data = nextData;
     this.render();
   }
