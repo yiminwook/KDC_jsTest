@@ -2,16 +2,18 @@ import api from "./api.js";
 
 class ImageInfo {
   $imageInfo = null;
-  data = null;
-  // {visible: bool, image:{ id,url, name }}
+  data = {
+    visible: false,
+    image: null,
+  };
 
-  constructor({ $target, data }) {
+  constructor({ $target, initData }) {
     const $imageInfo = document.createElement("div");
     $imageInfo.className = "ImageInfo";
     this.$imageInfo = $imageInfo;
     $target.appendChild($imageInfo);
 
-    this.data = data;
+    this.data = initData;
 
     this.render();
   }
@@ -22,10 +24,20 @@ class ImageInfo {
   }
 
   async showDetail({ visible, image }) {
-    const id = image.id;
-    const { data } = await api.fetchCatsById(id);
-    const newData = { ...image, ...data };
-    this.setState({ visible, image: newData });
+    try {
+      const id = image.id;
+      const { data } = await api.fetchCatsById(id);
+      const newData = { ...image, ...data };
+      this.setState({ visible, image: newData });
+    } catch (error) {
+      console.error(error);
+      this.setState({
+        visible,
+        image,
+        temperament: "로드실패",
+        origin: "로드실패",
+      });
+    }
   }
 
   closeImageInfo() {

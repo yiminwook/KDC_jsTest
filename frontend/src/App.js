@@ -97,7 +97,7 @@ class App {
 
     this.imageInfo = new ImageInfo({
       $target,
-      data: {
+      initData: {
         visible: false,
         image: null,
       },

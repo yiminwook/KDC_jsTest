@@ -32,6 +32,14 @@ class KeywordHistory {
     this.render();
   }
 
+  bindEvent() {
+    this.$keywordHistory
+      .querySelectorAll("li button")
+      .forEach((el) =>
+        el.addEventListener("click", (e) => this.onSearch(e.target.textContent))
+      );
+  }
+
   render() {
     this.$keywordHistory.textContent = "";
     this.$keywordHistory.insertAdjacentHTML(
@@ -40,11 +48,7 @@ class KeywordHistory {
         .map((keyword) => `<li><button>${keyword}</button></li>`)
         .join("")
     );
-    this.$keywordHistory
-      .querySelectorAll("li button")
-      .forEach((el) =>
-        el.addEventListener("click", (e) => this.onSearch(e.target.textContent))
-      );
+    this.bindEvent();
   }
 }
 
