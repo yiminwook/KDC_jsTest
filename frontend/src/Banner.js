@@ -73,7 +73,7 @@ class Banner {
   }
 
   render() {
-    this.$banner.innerText = "";
+    this.$banner.textContent = "";
     if (this.data.items) {
       this.$banner.insertAdjacentHTML(
         "afterbegin",
