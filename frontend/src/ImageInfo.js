@@ -18,9 +18,18 @@ class ImageInfo {
     this.render();
   }
 
+  setFade(isVisible) {
+    if (isVisible) {
+      this.$imageInfo.classList.add("show");
+    } else {
+      this.$imageInfo.classList.remove("show");
+    }
+  }
+
   setState(nextData) {
     this.data = nextData;
     this.render();
+    this.setFade(nextData.visible);
   }
 
   async showDetail({ visible, image }) {
@@ -47,7 +56,6 @@ class ImageInfo {
   render() {
     if (this.data.visible) {
       const { name, url, temperament, origin } = this.data.image;
-
       this.$imageInfo.innerHTML = `
         <div class="content-wrapper">
           <div class="title">
@@ -60,10 +68,9 @@ class ImageInfo {
             <div>태생: ${origin}</div>
           </div>
         </div>`;
-      this.$imageInfo.style.display = "block";
       this.$imageInfo.addEventListener("click", (e) => {
         if (
-          e.target.className === "ImageInfo" ||
+          e.target.classList.contains("ImageInfo") > -1 ||
           e.target.className === "close"
         ) {
           this.closeImageInfo();
@@ -74,8 +81,6 @@ class ImageInfo {
           this.closeImageInfo();
         }
       });
-    } else {
-      this.$imageInfo.style.display = "none";
     }
   }
 }

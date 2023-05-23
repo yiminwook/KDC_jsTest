@@ -131,11 +131,45 @@ body * {
   object-fit: cover;
 }
 
-.SearchResult .item {
+.item {
+  position: relative;
   background-color: #eee;
   display: inline-block;
   margin: 0 0 1em;
   width: 100%;
+  cursor: pointer;
+}
+
+.item > div:first-child {
+  position: relative;
+  width: auto;
+  aspect-ratio: 1 / 1.5;
+  background-color: gray;
+  overflow: hidden;
+}
+
+.item > div:first-child > img {
+  position: absolute;
+}
+
+.item:hover .content {
+  visibility: visible;
+  opacity: 1;
+}
+
+.content {
+  visibility: hidden;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  transition: all 0.3s ease;
+  font-size: 2rem;
+  text-align: center;
+  color: white;
+  background-color: rgba(0, 0, 0, 0.3);
 }
 
 .Empty {
@@ -150,12 +184,20 @@ body * {
 
 .ImageInfo {
   position: fixed;
+  visibility: hidden;
   left: 0;
   top: 0;
   width: 100vw;
   height: 100vh;
   color: var(--textColor);
   background-color: rgba(0, 0, 0, 0.5);
+  opacity: 0;
+  transition: all 1s ease;
+}
+
+.ImageInfo.show {
+  visibility: visible;
+  opacity: 1;
 }
 
 .ImageInfo .title {
@@ -187,16 +229,4 @@ body * {
 
 .ImageInfo .content-wrapper img {
   width: 100%;
-}
-
-.item > div {
-  position: relative;
-  width: auto;
-  aspect-ratio: 1 / 1.5;
-  background-color: gray;
-  overflow: hidden;
-}
-
-.item > div > img {
-  position: absolute;
 }

@@ -60,6 +60,7 @@ class App {
       $target,
       initialData: this.data.items,
       onClick: async (image) => {
+        console.log(image);
         try {
           this.loading.show();
           await this.imageInfo.showDetail({

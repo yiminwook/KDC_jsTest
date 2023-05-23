@@ -55,7 +55,8 @@ class SearchResult {
           <li class="item" data-index=${index}>
             <div>
               <img src=${IMAGE_PLACEHOLDER} data-src=${cat.url} alt=${cat.name} />
-            </div
+            </div>
+            <div class="content">${cat.name}</div>
           </li>
         `
         )
