@@ -38,6 +38,7 @@ class App {
           this.loading.hide();
         } catch (error) {
           console.error(error);
+          this.setState({ ...this.data, items: null });
           this.loading.hide();
         }
       },

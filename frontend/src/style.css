@@ -104,6 +104,12 @@ body * {
   width: 100%;
 }
 
+.Empty {
+  text-align: center;
+  font-size: 3rem;
+  padding: 3rem;
+}
+
 .SearchInputSection {
   display: grid;
   grid-template-columns: 3fr 1fr;
