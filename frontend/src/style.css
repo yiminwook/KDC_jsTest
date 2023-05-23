@@ -68,8 +68,8 @@ body * {
 .SearchInputSection {
   position: relative;
   display: grid;
-  grid-template-columns: 3fr 1fr;
-  column-gap: 40px;
+  grid-template-columns: repeat(5, auto);
+  column-gap: 5px;
 }
 
 .SearchInputSection:hover .KeywordHistory {
@@ -79,6 +79,8 @@ body * {
 .SearchInput {
   font-size: 40px;
   padding: 10px 15px;
+  span: 2;
+  grid-column: span 3;
 }
 
 .KeywordHistory {

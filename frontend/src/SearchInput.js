@@ -1,9 +1,10 @@
 import KeywordHistory from "./KeywordHistory.js";
 import handleLocalStorage from "./utils/localstorage.js";
 import RandomButton from "./RandomButton.js";
+import LimitCount from "./LimitCount.js";
 
 class SearchInput {
-  constructor({ $target, onSearch, onRandomSearch }) {
+  constructor({ $target, onSearch, onRandomSearch, onSelect }) {
     const $searchInputSection = document.createElement("section");
     this.$searchInputSection = $searchInputSection;
     this.$searchInputSection.className = "SearchInputSection";
@@ -16,7 +17,12 @@ class SearchInput {
     this.$searchInput.autofocus = "autofocus";
     this.$searchInputSection.appendChild(this.$searchInput);
 
-    this.randomButton = new RandomButton({
+    this.$limitCount = new LimitCount({
+      $target: this.$searchInputSection,
+      onSelect,
+    });
+
+    this.$randomButton = new RandomButton({
       $target: this.$searchInputSection,
       onClick: (e) => {
         onRandomSearch(e);

@@ -12,6 +12,7 @@ class App {
     items: [],
     page: 1,
     isDarkMode: false,
+    selected: "10",
   };
 
   constructor($target) {
@@ -32,7 +33,10 @@ class App {
       onSearch: async (keyword) => {
         try {
           this.loading.show();
-          const { data = [] } = await api.fetchCats(keyword);
+          const { data = [] } = await api.fetchCatsWithLimit({
+            keyword,
+            limit: this.data.selected,
+          });
           this.setState({ ...this.data, items: data });
           this.saveResult(data);
           this.loading.hide();
@@ -42,7 +46,6 @@ class App {
           this.loading.hide();
         }
       },
-
       onRandomSearch: async () => {
         try {
           this.loading.show();
@@ -54,13 +57,15 @@ class App {
           this.loading.hide();
         }
       },
+      onSelect: (value) => {
+        this.setState({ ...this.data, selected: value });
+      },
     });
 
     this.searchResult = new SearchResult({
       $target,
       initialData: this.data.items,
       onClick: async (image) => {
-        console.log(image);
         try {
           this.loading.show();
           await this.imageInfo.showDetail({
@@ -82,7 +87,9 @@ class App {
           const { data } = await api.fetchCatsWithPage({
             keyword: lastKeyword,
             page: this.data.page + 1, //setState
+            limit: this.data.selected,
           });
+          if (data.length === 0) return;
           const newItems = [...this.data.items, ...data];
           this.setState({
             ...this.data,
@@ -115,6 +122,7 @@ class App {
 
   setState(nextData) {
     this.data = nextData;
+    console.log(this.data.items.length);
     this.searchResult.setState(this.data.items);
   }
 

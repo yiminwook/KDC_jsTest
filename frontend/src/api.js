@@ -23,9 +23,14 @@ const api = {
   fetchCats: async (keyword) => {
     return await request(`${API_ENDPOINT}/api/cats/search?q=${keyword}`);
   },
-  fetchCatsWithPage: async ({ keyword, page }) => {
+  fetchCatsWithPage: async ({ keyword, page, limit }) => {
     return await request(
-      `${API_ENDPOINT}/api/cats/search?q=${keyword}&page=${page}`
+      `${API_ENDPOINT}/api/cats/search?q=${keyword}&page=${page}&limit=${limit}`
+    );
+  },
+  fetchCatsWithLimit: async ({ keyword, limit }) => {
+    return await request(
+      `${API_ENDPOINT}/api/cats/search?q=${keyword}&limit=${limit}`
     );
   },
   fetchRandomCats: async () => {
