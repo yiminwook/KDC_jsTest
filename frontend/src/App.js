@@ -5,6 +5,7 @@ import SearchInput from "./SearchInput.js";
 import SearchResult from "./SearchResult.js";
 import api from "./api.js";
 import handleLocalStorage from "./utils/localstorage.js";
+import Banner from "./Banner.js";
 
 class App {
   $target = null;
@@ -19,6 +20,8 @@ class App {
     this.$target = $target;
 
     this.loading = new Loading({ $target });
+
+    this.banner = new Banner({ $target });
 
     this.darkModeToggle = new DarkModeToggle({
       $target,
@@ -122,7 +125,6 @@ class App {
 
   setState(nextData) {
     this.data = nextData;
-    console.log(this.data.items.length);
     this.searchResult.setState(this.data.items);
   }
 
